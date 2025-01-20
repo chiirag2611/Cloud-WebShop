@@ -69,7 +69,24 @@
             </div>
         </div> <!-- row.// -->
         <hr>
-        <a href="{% url 'add_cart' single_product.id %}" class="btn  btn-primary"style="border: 2px solid ; border-color: #ff5733; background-color: #ff5733; color: white;"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
+        {% if single_product.stock <= 0 %}
+    <div style="display: flex; justify-content: space-between; width: 500px; margin: 0 auto;">
+        <!-- Out of Stock Message Button -->
+        <a href="{% url 'home' %}" class="btn-out-of-stock">
+            <h6 style="background-color: red; color: white; padding: 10px; text-align: center; width: 240px;">
+                The item is out of stock. Please visit us again!
+            </h6>
+        </a>
+
+        <!-- Continue Shopping Button -->
+        <a href="{% url 'store' %}" class="btn-continue-shopping">
+            <h6 style="background-color: #28a745; color: white; padding: 10px; text-align: center; width: 240px;">
+                Continue Shopping
+            </h6>
+        </a>
+    </div>
+{% endif %}
+
     </article> 
             </main> 
         </div> 
