@@ -62,7 +62,7 @@ def cart(request, total=0, quantity=0, cart_items=None):
         cart = Cart.objects.get(cart_id=_cart_id(request))
         cart_items = CartItem.objects.filter(cart=cart, is_active=True)
         for cart_item in cart_items:
-            total += cart_item.sub_total()  # Use the sub_total method to calculate
+            total += cart_item.sub_total()  #total for calculation
             quantity += cart_item.quantity
         tax = (1 * total/100)
         grand_total = total + tax
