@@ -147,10 +147,10 @@
                                 <span class="price">€ {{ product.price }}</span>
                             </div> <!-- price-wrap// -->
                         </div>
-                        <a href="#" class="btn btn-block btn-primary" 
-                           style="border: 2px solid #ff5733; background-color: #ff5733; color: white;">
-                           Add to cart
-                        </a>
+                        <a href="{% url 'add_cart' product.id %}" class="btn btn-block btn-primary" 
+                        style="border: 2px solid #ff5733; background-color: #ff5733; color: white;">
+                        Add to cart
+                     </a>
                     </figcaption>
                 </figure>
             </div> <!-- col.// -->
