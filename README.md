@@ -1,1 +1,1 @@
-Hello! This is django Project which is hosted on AWS using EC2 beanstalk.
+This is a full stack web application designed to manage e-commerce or store functionality. It includes features such as adding products to a shopping cart, updating cart quantities, managing product inventory, filtering of products and payment gateway. It is hoosted using cloud AWS EC2 Beanstalk with free tier version.

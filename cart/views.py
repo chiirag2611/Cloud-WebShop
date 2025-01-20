@@ -64,7 +64,7 @@ def cart(request, total=0, quantity=0, cart_items=None):
         for cart_item in cart_items:
             total += cart_item.sub_total()  # Use the sub_total method to calculate
             quantity += cart_item.quantity
-        tax = (1.35 * total/100)
+        tax = (1 * total/100)
         grand_total = total + tax
     except Cart.DoesNotExist:
         pass
