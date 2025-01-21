@@ -2,8 +2,8 @@ This is a full stack web application designed to manage e-commerce or store func
 
 To run this project follow below steps:
 
-1. **Export your database**:
-```python
+1. **Export your database**: 
+```python 
 python manage.py dumpdata > data.json
 ```
 
@@ -34,9 +34,10 @@ cd Cloud-Webshop
 2. Create and activate virtual environment
 ```bash
 python -m venv env
-# For Windows
 
-venv\Scripts\activate
+# For Windows
+env\Scripts\activate
+
 # For Mac/Linux
 source env/bin/activate
 ```
