@@ -8,14 +8,14 @@ python manage.py dumpdata > data.json
 ```
 
 2. **Export your media files** (product images)
-Create a zip file containing your media folder.
+Create a zip file containing your media folder for storage purpose.
 
 3. **Create requirements.txt**:
 ```bash
 pip freeze > requirements.txt
 ```
 
-4. **Instructions for others** (create a README.md):
+4. **Instructions for others** (create a README.md for new instruction if any):
 ```markdown
 # E-commerce Project Setup Instructions
 
