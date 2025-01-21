@@ -122,11 +122,19 @@
             </aside> <!-- col.// -->
             <main class="col-md-9">
         
-        <header class="border-bottom mb-4 pb-3">
-                <div class="form-inline">
-                    <span class="mr-md-auto"> <b>{{ product_count }}</b> Items found </span>
-                </div>
-        </header><!-- sect-heading -->
+                <header class="border-bottom mb-4 pb-3">
+                    <div class="form-inline">
+                        <span class="mr-md-auto">
+                            {% if products %}
+                                {% with items_on_page=products|length total=paginator.count %}
+                                    <b>Showing {{ items_on_page }} of {{ total }} Items</b>
+                                {% endwith %}
+                            {% else %}
+                                <b>0 Items found</b>
+                            {% endif %}
+                        </span>
+                    </div>
+                </header>
         
         <div class="row">
             {% for product in products %}
@@ -156,16 +164,42 @@
             </div> <!-- col.// -->
             {% endfor %}
         </div>
-        
-        
         <nav class="mt-4" aria-label="Page navigation sample">
-          <ul class="pagination">
-            <li class="page-item disabled"><a class="page-link" href="#"style="border: 2px solid ; border-color: #ff5733; text-color: #ff5733; color: #ff5733;;">Previous</a></li>
-            <li class="page-item active"><a class="page-link" href="#"style="border: 2px solid ; border-color: #ff5733; background-color:#ff5733; text-color: #ff5733; color: white;;">1</a></li>
-            <li class="page-item"><a class="page-link" href="#"style="border: 2px solid ; border-color: #ff5733; text-color: #ff5733; color: #ff5733;;">2</a></li>
-            <li class="page-item"><a class="page-link" href="#"style="border: 2px solid ; border-color: #ff5733; text-color: #ff5733; color: #ff5733;;">3</a></li>
-            <li class="page-item"><a class="page-link" href="#"style="border: 2px solid ; border-color: #ff5733; text-color: #ff5733; color: #ff5733;;">Next</a></li>
-          </ul>
+            {% if products.has_other_pages %}
+            <ul class="pagination">
+                {% if products.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" style="border: 2px solid #ff5733; color: #ff5733;" href="?page={{products.previous_page_number}}">Previous</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" style="border: 2px solid #e9ecef; color: #6c757d;" href="#">Previous</a>
+                </li>
+                {% endif %}
+        
+                {% for i in products.paginator.page_range %}
+                    {% if products.number == i %}
+                    <li class="page-item active">
+                        <a class="page-link" style="border: 2px solid #ff5733; background-color: #ff5733; color: white;" href="#">{{i}}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" style="border: 2px solid #ff5733; color: #ff5733;" href="?page={{i}}">{{i}}</a>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+        
+                {% if products.has_next %}
+                <li class="page-item">
+                    <a class="page-link" style="border: 2px solid #ff5733; color: #ff5733;" href="?page={{products.next_page_number}}">Next</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" style="border: 2px solid #e9ecef; color: #6c757d;" href="#">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+            {% endif %}
         </nav>
         
             </main> <!-- col.// -->
