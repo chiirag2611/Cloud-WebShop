@@ -65,7 +65,7 @@ python manage.py loaddata data.json
 7. Create superuser (admin)
 ```bash
 python manage.py createsuperuser
-# Follow prompts to create admin account (follow below to access my admin profile)
+# Follow prompts to create admin account (follow below to access my admin profile - you can reach out to me)
 Email: c*************1@gmail.com
 First name: Chirag
 Last Name: Chawla
@@ -73,7 +73,7 @@ Password: ********
 ```
 
 8. Run the server
-```bash
+```bash/Terminal
 python manage.py runserver
 ```
 
