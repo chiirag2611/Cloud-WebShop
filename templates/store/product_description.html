@@ -4,140 +4,114 @@
 {% block content %}
 
 <section class="section-content padding-y bg">
-    <div class="container">
-    
+  <div class="container">
+
     <!-- ============================ C1 ================================= -->
     <div class="card">
-        <div class="row no-gutters">
-            <aside class="col-md-6">
-    <article class="gallery-wrap"> 
-        <div class="img-big-wrap">
-           <a href="#"><img src="{{ single_product.images.url }}"></a>
-        </div> 
-        
-    </article> 
-            </aside>
-            <main class="col-md-6 border-left">
-    <article class="content-body">
-    
-    <h2 class="title">{{ single_product.product_name }}</h2>
-    
-    <div class="mb-3"> 
-        <var class="price h4">€ {{single_product.price }}</var> 
-    </div> 
-    
-    <p>{{ single_product.description }}</p>
-    
-    
-    <hr>
-        <div class="row">
-            <div class="item-option-select">
-                <h6>Choose Color</h6>
-                <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
-                  <label class="btn btn-light">
-                    <input type="radio" name="radio_color"> Brown
-                  </label>
-                  <label class="btn btn-light">
-                    <input type="radio" name="radio_color" > Red
-                  </label>
-                  <label class="btn btn-light active">
-                    <input type="radio" name="radio_color checked"> Black
-                  </label>
-                  <label class="btn btn-light">
-                    <input type="radio" name="radio_color"> White
-                  </label>
-                </div> 
+      <div class="row no-gutters">
+        <aside class="col-md-6">
+          <article class="gallery-wrap">
+            <div class="img-big-wrap">
+              <a href="#"><img src="{{ single_product.images.url }}"></a>
             </div>
-        </div> <!-- row.// -->
-        <div class="row">
-            <div class="item-option-select">
-                <h6>Select Size</h6>
-                <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
-                  <label class="btn btn-light">
-                    <input type="radio" name="radio_color checked"> Small
-                  </label>
-                  <label class="btn btn-light active">
-                    <input type="radio" name="radio_color" > Medium
-                  </label>
-                  <label class="btn btn-light">
-                    <input type="radio" name="radio_color"> Large
-                  </label>
-                  <label class="btn btn-light">
-                    <input type="radio" name="radio_color"> Extra Large
-                  </label>
-                </div> 
-            </div>
-        </div> <!-- row.// -->
-        <hr>
-        {% if single_product.stock <= 0 %}
-        <div style="display: flex; justify-content: space-between; width: 500px; margin: 0 auto;">
-            <!-- Out of Stock Message Button -->
-            <a href="{% url 'home' %}" class="btn-out-of-stock">
-                <h6 style="background-color: red; color: white; padding: 10px; text-align: center; width: 240px;">
-                    The item is out of stock. Please visit us again!
-                </h6>
-            </a>
-    
-            <!-- Continue Shopping Button -->
-            <a href="{% url 'store' %}" class="btn-continue-shopping">
-                <h6 style="background-color: #28a745; color: white; padding: 10px; text-align: center; width: 240px;">
-                    Continue Shopping
-                </h6>
-            </a>
-        </div>
-        {% else %}
-          {% if in_cart %}
-          <a href="#" class="btn btn-success" style=" color: white;"> <span class="text">Already in the Cart</span> <i class="fas fa-check"></i>  </a>
-          <a href="{% url 'cart' %}" class="btn btn-outline-primary" 
-          style="border: 2px solid; border-color: #3877ad;">
-          <span class="text">View Cart</span> 
-          <i class="fas fa-eye"></i>
-       </a>
-                 {% else %}
-        <a href="{% url 'add_cart' single_product.id %}" class="btn  btn-primary"style="border: 2px solid ; border-color: #ff5733; background-color: #ff5733; color: white;"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
-          {% endif %}
-        {% endif %}
 
-    </article> 
-            </main> 
-        </div> 
-    </div> 
-    <!-- ============================ C1 END .// ================================= -->
-    
-    <br>
-    
-    <div class="row">
-                <div class="col-md-9">
-    
-        <header class="section-heading">
-            <h3>Customer Reviews </h3>  
-            
-        </header>
-    
-        <article class="box mb-3">
-            <div class="icontext w-100">
-                <img src="{%static './images/avatars/avatar1.jpg'%}" class="img-xs icon rounded-circle">
-                <div class="text">
-                    <span class="date text-muted float-md-right">19.01.2024 </span>  
-                    <h6 class="mb-1">Samyak Soni </h6>
-                    
+          </article>
+        </aside>
+        <main class="col-md-6 border-left">
+          <form action = "{% url 'add_cart' single_product.id %}" method="POST">
+            <article class="content-body">
+
+              <h2 class="title">{{ single_product.product_name }}</h2>
+
+              <div class="mb-3">
+                <var class="price h4">€ {{single_product.price }}</var>
+              </div>
+
+              <p>{{ single_product.description }}</p>
+
+              <hr>
+              <div class="row">
+                <div class="item-option-select">
+                  <h6>Choose Color</h6>
+                  <select name="color" class="form-control">
+                    {% for i in single_product.variation_set.all %}
+                    <option value="{{ i.variation_value | lower}}">{{ i.variation_value | capfirst }}</option>
+                    {% endfor %} 
+                  </select>
                 </div>
-            </div> <!-- icontext.// -->
-            <div class="mt-3">
-                <p>
-                   Nice Product! I personally recommend it.
-                </p>	
+              </div> 
+              <hr>
+              {% if single_product.stock <= 0 %} <div
+                style="display: flex; justify-content: space-between; width: 500px; margin: 0 auto;">
+                <!-- Out of Stock Message Button -->
+                <a href="{% url 'home' %}" class="btn-out-of-stock">
+                  <h6 style="background-color: red; color: white; padding: 10px; text-align: center; width: 240px;">
+                    The item is out of stock. Please visit us again!
+                  </h6>
+                </a>
+
+                <!-- Continue Shopping Button -->
+                <a href="{% url 'store' %}" class="btn-continue-shopping">
+                  <h6 style="background-color: #28a745; color: white; padding: 10px; text-align: center; width: 240px;">
+                    Continue Shopping
+                  </h6>
+                </a>
+              </div>
+              {% else %}
+              {% if in_cart %}
+              <a href="#" class="btn btn-success" style=" color: white;"> <span class="text">Already in the Cart</span> <i
+              class="fas fa-check"></i> </a>
+              <a href="{% url 'cart' %}" class="btn btn-outline-primary" style="border: 2px solid; border-color: #3877ad;">
+              <span class="text">View Cart</span>
+              <i class="fas fa-eye"></i>
+              </a>
+              {% else %}
+              <button type="submit" class="btn  btn-primary"
+                style="border: 2px solid ; border-color: #ff5733; background-color: #ff5733; color: white;"> <span
+                  class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i> </button>
+              {% endif %}
+              {% endif %}
+            </article>
+          </form>
+        </main>
+      </div>
+    </div>
+    <!-- ============================ C1 END .// ================================= -->
+
+    <br>
+
+    <div class="row">
+      <div class="col-md-9">
+
+        <header class="section-heading">
+          <h3>Customer Reviews </h3>
+
+        </header>
+
+        <article class="box mb-3">
+          <div class="icontext w-100">
+            <img src="{%static './images/avatars/avatar1.jpg'%}" class="img-xs icon rounded-circle">
+            <div class="text">
+              <span class="date text-muted float-md-right">19.01.2024 </span>
+              <h6 class="mb-1">Samyak Soni </h6>
+
             </div>
+          </div> <!-- icontext.// -->
+          <div class="mt-3">
+            <p>
+              Nice Product! I personally recommend it.
+            </p>
+          </div>
         </article>
-    
-        
-    
-        </div> <!-- col.// -->
+
+
+
+      </div> <!-- col.// -->
     </div> <!-- row.// -->
-    
-    
-    </div> <!-- container .//  -->
-    </section>
 
 
-    {% endblock %}
+  </div> <!-- container .//  -->
+</section>
+
+
+{% endblock %}
