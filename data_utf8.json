@@ -1,0 +1,458 @@
+[
+  {
+    "model": "category.category",
+    "pk": 1,
+    "fields": {
+      "category_name": "Sofa",
+      "slug": "sofa",
+      "description": "Welcome to sofa category! Please have a look in different categories of sofa.",
+      "cat_image": "photos/categories/sofa.jpg"
+    }
+  },
+  {
+    "model": "category.category",
+    "pk": 2,
+    "fields": {
+      "category_name": "Chairs",
+      "slug": "chairs",
+      "description": "Welcome to chair category! Please have a look in different categories of chair.",
+      "cat_image": "photos/categories/chair.jpg"
+    }
+  },
+  {
+    "model": "category.category",
+    "pk": 3,
+    "fields": {
+      "category_name": "Lamps",
+      "slug": "lamps",
+      "description": "Welcome to lamp category! Please have a look in different categories of lamps.",
+      "cat_image": "photos/categories/lamps.jpg"
+    }
+  },
+  {
+    "model": "category.category",
+    "pk": 4,
+    "fields": {
+      "category_name": "Table",
+      "slug": "table",
+      "description": "Welcome to Table category! Please have a look in different categories of Table.",
+      "cat_image": "photos/categories/table.jpg"
+    }
+  },
+  {
+    "model": "category.category",
+    "pk": 5,
+    "fields": {
+      "category_name": "Working Desk",
+      "slug": "working-desk",
+      "description": "Welcome to working desk category! Please have a look in different categories of working desk.",
+      "cat_image": "photos/categories/Worrking_desk.jpg"
+    }
+  },
+  {
+    "model": "category.category",
+    "pk": 6,
+    "fields": {
+      "category_name": "Bed",
+      "slug": "bed",
+      "description": "This is category for bed",
+      "cat_image": "photos/categories/Bed.jpg"
+    }
+  },
+  {
+    "model": "accounts.account",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$OTXSHtE6eHn1RgWA64C4Mg$Prxv8NPyNz8xGiJw/qE42of4Ahzkp/+yIWSxWdiqvCA=",
+      "first_name": "Chirag",
+      "last_name": "Chawla",
+      "username": "Cloud-Admin",
+      "email": "chawlachirag2611@gmail.com",
+      "phone_number": "",
+      "date_joined": "2025-01-19T14:50:53.168Z",
+      "last_login": "2025-01-23T02:07:37.470Z",
+      "is_admin": true,
+      "is_staff": true,
+      "is_active": true,
+      "is_superadmin": true
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 1,
+    "fields": {
+      "product_name": "Dining Table",
+      "slug": "dining-table",
+      "description": "\"Crafted for style and durability, this dining table enhances any dining room. Perfect for family meals or entertaining guests.\"",
+      "price": 120,
+      "images": "photos/products/Dining_Table.jpg",
+      "stock": 100,
+      "is_available": true,
+      "category": 4,
+      "created_date": "2025-01-19T15:32:48.758Z",
+      "modified_date": "2025-01-19T15:32:48.758Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 2,
+    "fields": {
+      "product_name": "Chair",
+      "slug": "chair",
+      "description": "\"Add a touch of elegance with this sturdy wooden chair. Designed for comfort and style, perfect for any space.\"",
+      "price": 20,
+      "images": "photos/products/Chair.jpg",
+      "stock": 80,
+      "is_available": true,
+      "category": 2,
+      "created_date": "2025-01-19T15:33:31.580Z",
+      "modified_date": "2025-01-19T15:33:31.580Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 3,
+    "fields": {
+      "product_name": "Sofa",
+      "slug": "sofa",
+      "description": "\"Relax in style with this luxurious sofa. Crafted for comfort, it\u2019s the perfect centerpiece for your living room.\"",
+      "price": 150,
+      "images": "photos/products/Sofa.jpg",
+      "stock": 25,
+      "is_available": true,
+      "category": 1,
+      "created_date": "2025-01-19T15:34:11.405Z",
+      "modified_date": "2025-01-19T15:34:11.405Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 4,
+    "fields": {
+      "product_name": "Bed King Size",
+      "slug": "bed-king-size",
+      "description": "\"Experience ultimate comfort with this king-size bed. Perfectly designed for a restful night\u2019s sleep and a stylish bedroom.\"",
+      "price": 80,
+      "images": "photos/products/Bed_King_Size.jpg",
+      "stock": 100,
+      "is_available": true,
+      "category": 6,
+      "created_date": "2025-01-19T15:34:56.702Z",
+      "modified_date": "2025-01-19T15:34:56.702Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 5,
+    "fields": {
+      "product_name": "Bed Queen Size",
+      "slug": "bed-queen-size",
+      "description": "\"Indulge in luxurious comfort with this king-size bed. The ideal blend of style and relaxation for a perfect night\u2019s sleep.\"",
+      "price": 120,
+      "images": "photos/products/Bed_Queen_Size.jpg",
+      "stock": 80,
+      "is_available": true,
+      "category": 6,
+      "created_date": "2025-01-19T15:35:29.684Z",
+      "modified_date": "2025-01-19T15:35:29.684Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 6,
+    "fields": {
+      "product_name": "Side Table",
+      "slug": "side-table",
+      "description": "\"Functional and stylish, this side table is perfect for any room. Ideal for holding lamps, drinks, or decor.\"",
+      "price": 40,
+      "images": "photos/products/Side_Table.jpg",
+      "stock": 30,
+      "is_available": true,
+      "category": 4,
+      "created_date": "2025-01-19T15:36:07.856Z",
+      "modified_date": "2025-01-19T15:36:07.856Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 7,
+    "fields": {
+      "product_name": "Relax Chair",
+      "slug": "relax-chair",
+      "description": "\"Unwind in comfort with this relaxing chair. Designed for ultimate support and perfect for any leisure space.\"",
+      "price": 40,
+      "images": "photos/products/Relax_Chair.jpg",
+      "stock": 120,
+      "is_available": true,
+      "category": 2,
+      "created_date": "2025-01-19T15:36:42.502Z",
+      "modified_date": "2025-01-19T15:36:42.502Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 8,
+    "fields": {
+      "product_name": "Lamp",
+      "slug": "lamp",
+      "description": "\"Illuminate your space with this elegant lamp. A perfect blend of style and function for any room.\"",
+      "price": 30,
+      "images": "photos/products/Lamp.jpg",
+      "stock": 40,
+      "is_available": true,
+      "category": 3,
+      "created_date": "2025-01-19T15:37:14.518Z",
+      "modified_date": "2025-01-19T15:37:14.518Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 9,
+    "fields": {
+      "product_name": "Bean Bag",
+      "slug": "bean-bag",
+      "description": "\"Sink into comfort with this cozy bean bag. Perfect for lounging and adding a touch of style to any room.\"",
+      "price": 200,
+      "images": "photos/products/Bean_bag.jpg",
+      "stock": 120,
+      "is_available": true,
+      "category": 6,
+      "created_date": "2025-01-19T15:37:51.653Z",
+      "modified_date": "2025-01-19T17:36:02.368Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 10,
+    "fields": {
+      "product_name": "Blue Chair",
+      "slug": "blue-chair",
+      "description": "This is a good blue chair. You can use it everyday.",
+      "price": 35,
+      "images": "photos/products/Blue.jpg",
+      "stock": 40,
+      "is_available": true,
+      "category": 2,
+      "created_date": "2025-01-19T17:33:31.472Z",
+      "modified_date": "2025-01-19T17:33:31.472Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 11,
+    "fields": {
+      "product_name": "Floor Lamps",
+      "slug": "floor-lamps",
+      "description": "This is very beautiful lamp for your bedroom.",
+      "price": 40,
+      "images": "photos/products/lamp1.jpeg",
+      "stock": 34,
+      "is_available": true,
+      "category": 3,
+      "created_date": "2025-01-19T17:35:25.776Z",
+      "modified_date": "2025-01-19T17:35:25.776Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 12,
+    "fields": {
+      "product_name": "Working Desk",
+      "slug": "working-desk",
+      "description": "This is our new model for working desk. Please try your work from home.",
+      "price": 230,
+      "images": "photos/products/WD1.jpeg",
+      "stock": 12,
+      "is_available": true,
+      "category": 5,
+      "created_date": "2025-01-19T17:51:23.155Z",
+      "modified_date": "2025-01-23T02:22:29.354Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 13,
+    "fields": {
+      "product_name": "Sofa 2 Seater",
+      "slug": "sofa-2-seater",
+      "description": "Your personal taste is particularly evident here, because you can combine the sofa modules individually and have them covered with fabrics of your choice. This means you can sit back and relax on your &Tradition sofa and enjoy your home. sofa",
+      "price": 40,
+      "images": "photos/products/so.jpeg",
+      "stock": 0,
+      "is_available": true,
+      "category": 1,
+      "created_date": "2025-01-20T21:52:13.280Z",
+      "modified_date": "2025-01-23T02:18:45.193Z"
+    }
+  },
+  {
+    "model": "store.variation",
+    "pk": 1,
+    "fields": {
+      "product": 3,
+      "variation_category": "color",
+      "variation_value": "Green",
+      "is_active": true,
+      "created_date": "2025-01-23T13:16:30.542Z"
+    }
+  },
+  {
+    "model": "store.variation",
+    "pk": 2,
+    "fields": {
+      "product": 3,
+      "variation_category": "color",
+      "variation_value": "Sage green",
+      "is_active": true,
+      "created_date": "2025-01-23T13:17:01.716Z"
+    }
+  },
+  {
+    "model": "store.variation",
+    "pk": 3,
+    "fields": {
+      "product": 13,
+      "variation_category": "color",
+      "variation_value": "Grey",
+      "is_active": true,
+      "created_date": "2025-01-25T19:26:18.575Z"
+    }
+  },
+  {
+    "model": "store.variation",
+    "pk": 4,
+    "fields": {
+      "product": 1,
+      "variation_category": "color",
+      "variation_value": "Wooden",
+      "is_active": true,
+      "created_date": "2025-01-25T19:26:37.991Z"
+    }
+  },
+  {
+    "model": "store.variation",
+    "pk": 5,
+    "fields": {
+      "product": 2,
+      "variation_category": "color",
+      "variation_value": "Wooden",
+      "is_active": true,
+      "created_date": "2025-01-25T19:26:53.392Z"
+    }
+  },
+  {
+    "model": "store.variation",
+    "pk": 6,
+    "fields": {
+      "product": 4,
+      "variation_category": "color",
+      "variation_value": "Ivory",
+      "is_active": true,
+      "created_date": "2025-01-25T19:27:18.790Z"
+    }
+  },
+  {
+    "model": "store.variation",
+    "pk": 7,
+    "fields": {
+      "product": 5,
+      "variation_category": "color",
+      "variation_value": "Dark Grey",
+      "is_active": true,
+      "created_date": "2025-01-25T19:27:40.401Z"
+    }
+  },
+  {
+    "model": "store.variation",
+    "pk": 8,
+    "fields": {
+      "product": 6,
+      "variation_category": "color",
+      "variation_value": "Brushed Brown",
+      "is_active": true,
+      "created_date": "2025-01-25T19:27:57.470Z"
+    }
+  },
+  {
+    "model": "store.variation",
+    "pk": 9,
+    "fields": {
+      "product": 7,
+      "variation_category": "color",
+      "variation_value": "Grey",
+      "is_active": true,
+      "created_date": "2025-01-25T19:28:35.625Z"
+    }
+  },
+  {
+    "model": "store.variation",
+    "pk": 10,
+    "fields": {
+      "product": 8,
+      "variation_category": "color",
+      "variation_value": "Beige",
+      "is_active": true,
+      "created_date": "2025-01-25T19:28:57.248Z"
+    }
+  },
+  {
+    "model": "store.variation",
+    "pk": 11,
+    "fields": {
+      "product": 9,
+      "variation_category": "color",
+      "variation_value": "Off white",
+      "is_active": true,
+      "created_date": "2025-01-25T19:29:12.132Z"
+    }
+  },
+  {
+    "model": "store.variation",
+    "pk": 12,
+    "fields": {
+      "product": 10,
+      "variation_category": "color",
+      "variation_value": "Blue",
+      "is_active": true,
+      "created_date": "2025-01-25T19:29:26.456Z"
+    }
+  },
+  {
+    "model": "store.variation",
+    "pk": 13,
+    "fields": {
+      "product": 11,
+      "variation_category": "color",
+      "variation_value": "Black and White",
+      "is_active": true,
+      "created_date": "2025-01-25T19:29:48.635Z"
+    }
+  },
+  {
+    "model": "store.variation",
+    "pk": 14,
+    "fields": {
+      "product": 12,
+      "variation_category": "color",
+      "variation_value": "Dark wooden",
+      "is_active": true,
+      "created_date": "2025-01-25T19:30:06.325Z"
+    }
+  },
+  {
+    "model": "cart.cart",
+    "pk": 1,
+    "fields": {
+      "cart_id": "a4g7tkrhn6s8krq35bzyy23ekh6yh6xz",
+      "date_added": "2025-01-20"
+    }
+  },
+  {
+    "model": "cart.cart",
+    "pk": 2,
+    "fields": {
+      "cart_id": "v57vdtoorwgdwmfmydw47z70f95p1vy1",
+      "date_added": "2025-01-23"
+    }
+  }
+]
