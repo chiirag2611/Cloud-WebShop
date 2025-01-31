@@ -2,6 +2,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 import json
 from django.http import JsonResponse
+from django.core.mail import send_mail
 from .models import Payment
 from django.http import HttpResponse 
 from cart.models import CartItem
@@ -79,7 +80,13 @@ def payments(request):
 
             # ✅ Clear Cart
             cart_items.delete()
-
+            send_mail(
+                            subject="Order Confirmation",
+                            message=f"Hello {data.get('name')},\n\nThank you for your order!\n\nYour Order Number: {data.get('orderNumber')}\nTotal: €{data.get('amount')}\n\nWe will notify you once your order is shipped.\n\nBest Regards,\nYour Store Team",
+                            from_email="webshop.his@gmail.com",
+                            recipient_list=[data.get('email')],
+                            fail_silently=False,
+                        )
             return JsonResponse({"success": True, "message": "Payment recorded, Order placed, stock updated."})
 
         except Exception as e:
