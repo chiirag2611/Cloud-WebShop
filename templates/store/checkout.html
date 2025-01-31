@@ -5,14 +5,14 @@
 
 <section class="section-content padding-y bg">
     <div class="container">
-    
 
         <div class="row">
             <aside class="col-lg-6">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title mb-4">Billing Address</h4>
-                        <form action="" method="POST">
+                        <form id="orderForm" action="{% url 'place_order' %}" method="POST">
+                            {% csrf_token %}
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
@@ -25,64 +25,139 @@
                                 <label for="address" class="form-label">Address</label>
                                 <textarea class="form-control" id="address" name="address" rows="3" placeholder="Enter your address" required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
+                            <input type="hidden" name="order_total" id="orderTotal" value="0">
+                            <input type="hidden" name="order_number" id="orderNumber" value="{{ order_number }}">
+
+                        </form> 
                     </div>
                 </div>
             </aside>
             
             <aside class="col-lg-6">
-    
-            <div class="card">
-            <div class="card-body">
-                <table class="table table-borderless table-shopping-cart">
-                    <thead class="text-muted">
-                    <tr class="small text-uppercase">
-                        <th scope="col">Product</th>
-                        <th scope="col" width="120">Price</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                
-                    {% for cart_item in cart_items %}
-                    <tr>
-                        <td>
-                            <figure class="itemside align-items-center">
-                                <div class="aside"><img src="{{ cart_item.product.images.url }}" class="img-sm"></div>
-                                <figcaption class="info">
-                                    <a href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name }}</a>
-                                    <p class="text-muted small">
-                                        {% for variation in cart_item.variations.all %}
-                                        {{ variation.variation_category | capfirst }}: {{ variation.variation_value | capfirst }}<br>
-                                    {% endfor %}     
-                                    </p>
-                                </figcaption>
-                            </figure>
-                        </td>
-                      
-                        <td> 
-                            <div class="price-wrap"> 
-                                <var class="price">€ {{ cart_item.sub_total }}</var> 
-                            </div> <!-- price-wrap .// -->
-                        </td>
-                       
-                    </tr>
-                    {% endfor %}
-                
-                
-                    </tbody>
-                    </table>
-                <a href="./place-order.html" class="btn btn-primary btn-block btn-hover-orange" style="border: 2px solid; border-color: #ff5733; background-color: #ff5733; color: white;">  Order Now </a>
-                <a href="{% url 'store' %}" class="btn btn-light btn-block btn-hover-orange-light"  style="border: 2px solid #ddd; color: black;">  Continue Shopping </a>
-            </div> 
-            </div> 
-    
-    </aside> 
-    
-    
-    </div> 
-    
-    </div> 
-    </section>
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-borderless table-shopping-cart">
+                            <thead class="text-muted">
+                                <tr class="small text-uppercase">
+                                    <th scope="col">Product</th>
+                                    <th scope="col" width="120">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for cart_item in cart_items %}
+                                <tr>
+                                    <td>
+                                        <figure class="itemside align-items-center">
+                                            <div class="aside"><img src="{{ cart_item.product.images.url }}" class="img-sm"></div>
+                                            <figcaption class="info">
+                                                <a href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name }}</a>
+                                                <p class="text-muted small">
+                                                    {% for variation in cart_item.variations.all %}
+                                                    {{ variation.variation_category | capfirst }}: {{ variation.variation_value | capfirst }}<br>
+                                                    {% endfor %}     
+                                                </p>
+                                            </figcaption>
+                                        </figure>
+                                    </td>
+                                    <td> 
+                                        <div class="price-wrap"> 
+                                            <var class="price">€ {{ cart_item.sub_total }}</var> 
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <!-- PayPal Button Container -->
+                        <div id="paypal-button-container" class="text-center" style="max-width: 350px; margin: auto;"></div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+<!-- PayPal Integration -->
+<script src="https://www.paypal.com/sdk/js?client-id=AcwLS-dGSXN22-nNaWdd5_FW5g1XjIMSz-K7Rm_pzPv19e98E_d3HKuZ2hja4aguuU99hu4_rsw9_Jej&currency=EUR"></script>
+
+<script>
+    function calculateTotal() {
+        let total = 0;
+        document.querySelectorAll(".price").forEach(priceElement => {
+            let priceText = priceElement.innerText.replace("€", "").trim();
+            total += parseFloat(priceText);
+        });
+        return total.toFixed(2);
+    }
+
+    function validateForm() {
+        let email = document.getElementById("email").value.trim();
+        let name = document.getElementById("name").value.trim();
+        let address = document.getElementById("address").value.trim();
+
+        if (email === "" || name === "" || address === "") {
+            alert("⚠️ Please fill in all required fields before proceeding with payment.");
+            return false;
+        }
+        return true;
+    }
+
+    paypal.Buttons({
+        style: {
+            shape: 'rect',
+            color: 'blue',
+            layout: 'horizontal',
+            label: 'pay',
+            height: 45
+        },
+        createOrder: function(data, actions) {
+            if (!validateForm()) {
+                return Promise.reject(new Error("Form validation failed."));
+            }
+
+            let totalAmount = calculateTotal();
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: totalAmount,
+                        currency_code: "EUR"
+                    }
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                let paymentData = {
+                    paymentID: details.id,
+                    orderNumber: document.getElementById("orderNumber").value,  // ✅ Send order number
+                    amount: details.purchase_units[0].amount.value,
+                    currency: details.purchase_units[0].amount.currency_code,
+                    status: details.status
+                };
+
+                // Send payment details to backend
+                fetch("{% url 'payments' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    body: JSON.stringify(paymentData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = "{% url 'payments' %}";  // Redirect to confirmation page
+                    } else {
+                        alert("Payment recorded but encountered an error: " + data.message);
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+            });
+        }
+    }).render('#paypal-button-container');
+</script>
+
 
 {% endblock %}
