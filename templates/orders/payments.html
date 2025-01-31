@@ -10,7 +10,11 @@
                     <div class="card-body text-center">
                         <h2 class="text-success">Payment Successful! ✅</h2>
                         <p>Thank you for your purchase. Your order has been processed successfully.</p>
-                        <p><strong>Order Number:</strong> {{ order_number }}</p> <!-- ✅ Show order number -->
+                        {% if order_number %}
+                            <p><strong>Order Number:</strong> {{ order_number }}</p> <!-- ✅ Show order number -->
+                        {% else %}
+                            <p><strong>Order Number:</strong> Not Available</p>
+                        {% endif %}
                         <a href="{% url 'store' %}" class="btn btn-primary">Continue Shopping</a>
                     </div>
                 </div>

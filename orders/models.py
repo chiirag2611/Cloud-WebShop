@@ -27,12 +27,10 @@ class Order(models.Model):
     name = models.CharField (max_length=50)
     email = models.EmailField(max_length=50)
     address = models.CharField(max_length=50)
-    address_line_2 = models.CharField(max_length=50, blank=True)
     order_total = models.FloatField(default=0.0)
     status = models.CharField(max_length=10, choices=STATUS, default= 'New')
     is_ordered = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     def __str__(self) :
         return self.name
     

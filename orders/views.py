@@ -7,20 +7,27 @@ from django.http import HttpResponse
 from cart.models import CartItem
 from .forms import OrderForm
 import datetime
-from .models import Order
+from .models import Order,OrderProduct,Payment
 from django.views.decorators.csrf import csrf_exempt
 import logging
 
 logger = logging.getLogger(__name__)  # Django logging
 
 # Create your views here.
+@csrf_exempt
 def payments(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)  # Parse JSON from AJAX request
+
+            # ✅ Ensure required fields exist
+            if not data.get('email') or not data.get('name') or not data.get('address'):
+                return JsonResponse({"success": False, "message": "Missing required user information."})
+
+            # ✅ Save Payment Details First
             payment = Payment.objects.create(
                 payment_id=data.get('paymentID'),
-                order_number=data.get('orderNumber'),  # ✅ Store the order number
+                order_number=data.get('orderNumber'),
                 payment_method="PayPal",
                 amount_paid=data.get('amount'),
                 currency=data.get('currency', 'EUR'),
@@ -28,49 +35,83 @@ def payments(request):
             )
             payment.save()
 
-            return JsonResponse({"success": True, "message": "Payment recorded successfully."})
+            # ✅ Create the Order after payment
+            order = Order.objects.create(
+                order_number=data.get('orderNumber'),
+                name=data.get('name'),
+                email=data.get('email'),
+                address=data.get('address'),
+                order_total=float(data.get('amount')),
+                status="New",
+                is_ordered=True,
+                payment=payment  # Link payment
+            )
+            order.save()
+
+            # ✅ Store order_number in session before redirecting to payments.html
+            request.session['order_number'] = data.get('orderNumber')
+
+            # ✅ Fetch cart items and create OrderProduct entries
+            cart_items = CartItem.objects.all()
+            for item in cart_items:
+                order_product = OrderProduct.objects.create(
+                    order=order,
+                    payment=payment,
+                    product=item.product,
+                    variation=item.variations.first(),
+                    color="Default",
+                    size="Default",
+                    quantity=item.quantity,
+                    product_price=item.product.price,
+                    ordered=True
+                )
+                order_product.save()
+
+                # ✅ Reduce stock for each product
+                product = item.product
+                product_stock_before = product.stock
+                product.stock -= item.quantity
+                if product.stock < 0:
+                    product.stock = 0  # Prevent negative stock
+                product.save()
+
+                logger.info(f"Updated stock for {product.product_name}: {product_stock_before} -> {product.stock}")
+
+            # ✅ Clear Cart
+            cart_items.delete()
+
+            return JsonResponse({"success": True, "message": "Payment recorded, Order placed, stock updated."})
+
         except Exception as e:
             return JsonResponse({"success": False, "message": str(e)})
 
-    return render(request, 'orders/payments.html')  # Show confirmation page
+    # ✅ Retrieve order_number from session when rendering payments.html
+    order_number = request.session.get('order_number', None)
+    return render(request, 'orders/payments.html', {'order_number': order_number})
 
 @csrf_exempt
-def place_order(request, total=0, quantity=0):
-    cart_items = CartItem.objects.all()
-    cart_count = cart_items.count()
-    
-    if cart_count <= 0:
-        return redirect('store')
-
-    for cart_item in cart_items:
-        total += cart_item.sub_total()
-        quantity += cart_item.quantity
-
-        # Log to Django logs
-        logger.info(f"Product: {cart_item.product.product_name}, Price: {cart_item.product.price}, Quantity: {cart_item.quantity}")
-
+def place_order(request):
     if request.method == 'POST':
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            data = Order()
-            data.name = form.cleaned_data['name']
-            data.email = form.cleaned_data['email']
-            data.address = form.cleaned_data['address']
-            data.order_total = total
-            data.save()
+        try:
+            data = json.loads(request.body)  # Parse JSON from AJAX request
 
-            # Generate Order Number
-            yr = int(datetime.date.today().strftime('%Y'))
-            dt = int(datetime.date.today().strftime('%d'))
-            mt = int(datetime.date.today().strftime('%m'))
-            d = datetime.date(yr, mt, dt)
-            current_date = d.strftime("%Y%m%d")  # Example: 20210305
-            order_number = f"{current_date}{data.id}"
-            data.order_number = order_number
-            data.save()
+            # Create order entry
+            order = Order.objects.create(
+                order_number=data.get('orderNumber'),
+                name=data.get('name'),
+                email=data.get('email'),
+                address=data.get('address'),
+                order_total=float(data.get('total')),
+                status="New",
+                is_ordered=True
+            )
+            order.save()
 
-            # ✅ Pass `order_number` to the checkout template
-            return render(request, 'checkout.html', {'order_number': order_number, 'cart_items': cart_items, 'total': total})
+            return JsonResponse({"success": True, "message": "Order placed successfully."})
 
-    return redirect('checkout')
+        except Exception as e:
+            return JsonResponse({"success": False, "message": str(e)})
+
+    return JsonResponse({"success": False, "message": "Invalid request method."})
+
 
