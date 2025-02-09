@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'accounts',
     'store',
     'cart',
-    'orders'
+    'orders',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -127,12 +128,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-
+env = environ.Env()
+environ.Env.read_env()
 # AWS S3 Settings
-AWS_ACCESS_KEY_ID = os.getenv('AKIAYM7PN6KI3UUOF6KF')
-AWS_SECRET_ACCESS_KEY = os.getenv('')
-AWS_STORAGE_BUCKET_NAME = "cloudwebshop"
-AWS_S3_REGION_NAME = "eu-central-1"
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME', default='cloudwebshop')
+AWS_S3_REGION_NAME = env('AWS_S3_REGION_NAME', default='eu-central-1')
 AWS_S3_CUSTOM_DOMAIN = f"https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com"
 
 STATIC_URL = '/static/'
@@ -140,8 +142,11 @@ STATIC_ROOT = BASE_DIR /'static'
 STATICFILES_DIRS = [
     'Webshop/static',
 ]
+
+USE_S3 = env.bool('USE_S3', default=False)
+
 # Use S3 in Production, Local Storage Otherwise
-if os.getenv('USE_S3') == 'TRUE':  # Will only enable S3 on AWS
+if USE_S3:
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     MEDIA_URL = f'{AWS_S3_CUSTOM_DOMAIN}/media/'
 else:
@@ -154,8 +159,7 @@ else:
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-env = environ.Env()
-environ.Env.read_env()
+
 # ✅ SMTP Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = env('EMAIL_HOST', default='smtp.gmail.com')  # Use your SMTP server
