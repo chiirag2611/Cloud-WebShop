@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import environ
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -125,14 +127,26 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+
+# AWS S3 Settings
+AWS_ACCESS_KEY_ID = os.getenv('AKIAYM7PN6KI3UUOF6KF')
+AWS_SECRET_ACCESS_KEY = os.getenv('')
+AWS_STORAGE_BUCKET_NAME = "cloudwebshop"
+AWS_S3_REGION_NAME = "eu-central-1"
+AWS_S3_CUSTOM_DOMAIN = f"https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com"
+
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR /'static'
 STATICFILES_DIRS = [
     'Webshop/static',
 ]
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR /'media'
+# Use S3 in Production, Local Storage Otherwise
+if os.getenv('USE_S3') == 'TRUE':  # Will only enable S3 on AWS
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    MEDIA_URL = f'{AWS_S3_CUSTOM_DOMAIN}/media/'
+else:
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
