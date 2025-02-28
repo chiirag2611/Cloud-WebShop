@@ -102,23 +102,25 @@ def remove_cart_item(request, product_id, cart_item_id):
         
     return redirect('cart')
 
-
 def cart(request, total=0, quantity=0, cart_items=None):
     try: 
         cart = Cart.objects.get(cart_id=_cart_id(request))
         cart_items = CartItem.objects.filter(cart=cart, is_active=True)
         for cart_item in cart_items:
-            total += cart_item.sub_total()  #total for calculation
+            total += cart_item.sub_total()  # Total calculation
             quantity += cart_item.quantity
-        tax = (1 * total/100)
+        tax = (10 * total / 100)  # ✅ Fix tax calculation to 10% instead of 1%
         grand_total = total + tax
     except Cart.DoesNotExist:
-        pass
+        tax = 0
+        grand_total = 0
 
     context = {
         'total': total,
         'quantity': quantity,
         'cart_items': cart_items,
+        'tax': tax,  # ✅ Make sure tax is passed
+        'grand_total': grand_total,  # ✅ Make sure grand_total is passed
     }
 
     return render(request, 'store/cart.html', context)
@@ -127,17 +129,27 @@ def checkout(request, total=0, quantity=0, cart_items=None):
     try: 
         cart = Cart.objects.get(cart_id=_cart_id(request))
         cart_items = CartItem.objects.filter(cart=cart, is_active=True)
+        
         for cart_item in cart_items:
-            total += cart_item.sub_total()  #total for calculation
+            total += cart_item.sub_total()  # Total calculation
             quantity += cart_item.quantity
-        tax = (1 * total/100)
+        
+        tax = (10 * total / 100)  # ✅ Set tax to 10%
         grand_total = total + tax
+
+        # ✅ Debugging print statement
+        print(f"Checkout - Total: {total}, Tax: {tax}, Grand Total: {grand_total}")
+
     except Cart.DoesNotExist:
-        pass
+        tax = 0
+        grand_total = 0
 
     context = {
         'total': total,
         'quantity': quantity,
         'cart_items': cart_items,
+        'tax': tax,  # ✅ Make sure tax is passed
+        'grand_total': grand_total,  # ✅ Make sure grand_total is passed
     }
-    return render(request,'store/checkout.html',context) 
+
+    return render(request, 'store/checkout.html', context)

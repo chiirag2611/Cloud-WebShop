@@ -69,11 +69,26 @@
                                 {% endfor %}
                             </tbody>
                         </table>
-
+                
+                        <!-- ✅ Add Total, Tax, and Grand Total -->
+                        <dl class="dlist-align">
+                            <dt>Total Price:</dt>
+                            <dd class="text-right">€ {{ total }}</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Tax (10%):</dt>
+                            <dd class="text-right">€ {{ tax|floatformat:2 }}</dd>  <!-- ✅ Display Tax -->
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Grand Total:</dt>
+                            <dd class="text-right text-dark"><strong>€ {{ grand_total|floatformat:2 }}</strong></dd>  <!-- ✅ Display Grand Total -->
+                        </dl>
+                
                         <!-- PayPal Button Container -->
                         <div id="paypal-button-container" class="text-center" style="max-width: 350px; margin: auto;"></div>
                     </div>
                 </div>
+                
             </aside>
         </div>
     </div>
@@ -91,16 +106,20 @@
         const randomPart = Math.floor(1000 + Math.random() * 9000);  // Random 4-digit number
         return datePart + randomPart;
     }
-
     function calculateTotal() {
-        let total = 0;
+        let subtotal = 0;
         document.querySelectorAll(".price").forEach(priceElement => {
             let priceText = priceElement.innerText.replace("€", "").trim();
-            total += parseFloat(priceText);
+            subtotal += parseFloat(priceText);
         });
-        return total.toFixed(2);
+    
+        let tax = subtotal * 0.10;  // ✅ Add 10% VAT
+        let grandTotal = subtotal + tax;
+    
+        document.getElementById("orderTotal").value = grandTotal.toFixed(2);  // ✅ Update hidden input
+        return grandTotal.toFixed(2);
     }
-
+    
     function validateForm() {
         let email = document.getElementById("email").value.trim();
         let name = document.getElementById("name").value.trim();

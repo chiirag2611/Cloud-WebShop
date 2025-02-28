@@ -76,46 +76,47 @@
             
             <article class="filter-group">
                 <header class="card-header">
-                    <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class=""style=" text-color: #ff5733; color: #ff5733;;">
-                        <i class="icon-control fa fa-chevron-down"></i>
-                        <h6 class="title"style=" text-color: #ff5733; color: #ff5733;;">Price range </h6>
-                    </a>
+                  <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="" style="color: #ff5733;">
+                    <i class="icon-control fa fa-chevron-down"></i>
+                    <h6 class="title" style="color: #ff5733;">Price range</h6>
+                  </a>
                 </header>
-                <div class="filter-content collapse show" id="collapse_3" style="">
-                    <div class="card-body">
-                        
-                        <div class="form-row">
+                <div class="filter-content collapse show" id="collapse_3">
+                  <div class="card-body">
+                    <form method="get">
+                      <div class="form-row">
                         <div class="form-group col-md-6">
                           <label>Min</label>
-                          <!-- <input class="form-control" placeholder="$0" type="number"> -->
-                              <select class="mr-2 form-control">
-                                <option value="0">€0</option>
-                                <option value="20">€20</option>
-                                <option value="50">€50</option>
-                                <option value="80">€80</option>
-                                <option value="100">100</option>
-                                <option value="120">€120</option>
-                                <option value="150">€150</option>
-                                <option value="200">€200+</option>
-                            </select>
+                          <select name="min_price" class="mr-2 form-control">
+                            <option value="0">€0</option>
+                            <option value="20">€20</option>
+                            <option value="50">€50</option>
+                            <option value="80">€80</option>
+                            <option value="100">€100</option>
+                            <option value="120">€120</option>
+                            <option value="150">€150</option>
+                            <option value="200">€200+</option>
+                          </select>
                         </div>
                         <div class="form-group text-right col-md-6">
                           <label>Max</label>
-                              <select class="mr-2 form-control">
-                                <option value="20">€20</option>
-                                <option value="50">€50</option>
-                                <option value="80">€80</option>
-                                <option value="100">100</option>
-                                <option value="120">€120</option>
-                                <option value="150">€150</option>
-                                <option value="200">€200+</option>
-                            </select>
+                          <select name="max_price" class="mr-2 form-control">
+                            <option value="20">€20</option>
+                            <option value="50">€50</option>
+                            <option value="80">€80</option>
+                            <option value="100">€100</option>
+                            <option value="120">€120</option>
+                            <option value="150">€150</option>
+                            <option value="200">€200+</option>
+                          </select>
                         </div>
-                        </div> <!-- form-row.// -->
-                        <button class="btn btn-block btn-primary"style="border: 2px solid ; border-color: #ff5733; background-color: #ff5733; color: white;">Apply</button>
-                    </div><!-- card-body.// -->
+                      </div>
+                      <button type="submit" class="btn btn-block btn-primary" style="border: 2px solid #ff5733; background-color: #ff5733; color: white;">Apply</button>
+                    </form>
+                  </div><!-- card-body.// -->
                 </div>
-            </article> <!-- filter-group .// -->
+              </article>
+              
             
         </div> <!-- card.// -->
         
